@@ -57,7 +57,7 @@ switch ($action) {
       </tbody>
     </table>
   </div>
-  <button class="btn btn-sm btn-danger btn-block">Vaciar Carrito</button>
+  <button class="btn btn-sm btn-danger delete-cart btn-block">Vaciar Carrito</button>
     ';
     } else {
       $output .= '<div class="text-center">
@@ -98,6 +98,12 @@ switch ($action) {
       jsonBuild(400, 'No se puede agregar al carrito, intenta de nuevo');
     }
     jsonBuild(201);
+    break;
+  case 'destroy':
+    if (!deleteCart()) {
+      jsonBuild(400, 'No se pudo vaciar el carrito');
+    }
+    jsonBuild(200, 'Carrito eliminado con exito');
     break;
 }
 

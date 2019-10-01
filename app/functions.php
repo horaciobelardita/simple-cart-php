@@ -124,3 +124,9 @@ function addToCart($id, $qty = 1)
   $_SESSION['cart']['products'][] = $newProduct;
   return true;
 }
+
+function deleteCart()
+{
+  unset($_SESSION['cart']);
+  return session_destroy();
+}

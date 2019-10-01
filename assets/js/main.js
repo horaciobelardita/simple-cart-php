@@ -35,8 +35,49 @@ $(function () {
       });
 
   })
+  // vaciar carrito
+  $('body').on('click', '.delete-cart', deleteCart);
   // actualizar la cantidad
 });
+
+function deleteCart(event) {
+  event.preventDefault();
+  Swal.fire({
+    title: '¿Esta seguró de eliminar el carrito?',
+    text: "Este cambio no se podra revertir!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, eliminar'
+  }).then((result) => {
+    if (result.value) {
+      const action = 'destroy';
+      $.ajax({
+        url: 'ajax.php',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+          action
+        }
+      }).done(function (res) {
+        if (res.status == 200) {
+          Swal.fire('Eliminado!', res.msg, 'success');
+          loadCart();
+          return;
+        } else {
+          Swal.fire('Upps', res.msg, 'error');
+          return;
+        }
+      }).fail(function () {
+        Swal.fire('Upps', 'Hubo un error, intentelo de nuevo', 'error');
+      }).always(function () {
+
+      });
+    }
+  })
+
+}
 
 function loadCart() {
   const wrapper = $('#cart-wrapper'), loadWrapper = $('#load-wrapper'),
