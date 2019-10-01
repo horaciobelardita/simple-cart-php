@@ -50,7 +50,11 @@ switch ($action) {
             <input type="number" min="0" max="50" value="' . $product['qty'] .  '" class="form-control form-control-sm">
           </td>
           <td class="align-middle text-center">' . formatCurrency($product['qty'] * $product['price'], '$') .  '</td>
-          <td class="align-middle text-center text-danger"><i class="fa fa-times"></i></td>
+          <td class="align-middle text-center text-danger">
+            <button class="btn btn-danger btn-sm delete-from-cart" data-id="' . $product['id'] . '">  
+              <i class="fa fa-times"></i>
+            </button>
+          </td>
         </tr>';
       }
       $output .= '
@@ -105,6 +109,17 @@ switch ($action) {
     }
     jsonBuild(200, 'Carrito eliminado con exito');
     break;
+  case 'delete':
+    if (!isset($_POST['id'])) {
+      jsonBuild(403);
+      return;
+    }
+    if (!deleteFromCart($_POST['id'])) {
+      jsonBuild(400, 'No se pudo borrar del carrito, intenta de nuevo');
+    }
+    jsonBuild(200, 'Producto eliminado con exito');
+  default:
+    jsonBuild(403);
 }
 
 function jsonBuild($status = 200, $msg = '', $data = [])

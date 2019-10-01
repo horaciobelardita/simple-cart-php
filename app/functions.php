@@ -81,6 +81,20 @@ function calculateCartTotal()
   return $cartTotals;
 }
 
+function deleteFromCart($id)
+{
+  if (!isset($_SESSION['cart']['products'])) {
+    return false;
+  }
+  // verificar si ya existe el producto en el carrito y aumenta en cantidad
+  foreach ($_SESSION['cart']['products'] as $index => $product) {
+    if ($product['id'] == $id) {
+      unset($_SESSION['cart']['products'][$index]);
+      return true;
+    }
+  }
+  return false;
+}
 
 function addToCart($id, $qty = 1)
 {
