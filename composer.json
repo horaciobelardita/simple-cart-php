@@ -1,0 +1,6 @@
+{
+    "require": {
+        "fzaninotto/faker": "^1.8",
+        "mbezhanov/faker-provider-collection": "^1.2"
+    }
+}
