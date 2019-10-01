@@ -58,7 +58,6 @@ switch ($action) {
     </table>
   </div>
   <button class="btn btn-sm btn-danger btn-block">Vaciar Carrito</button>
-    
     ';
     } else {
       $output .= '<div class="text-center">
@@ -87,6 +86,18 @@ switch ($action) {
         <button disabled class="btn btn-lg btn-info btn-block">Pagar Ahora</button>
       ';
     jsonBuild(200, 'OK', $output);
+    break;
+    // agregar al carrito
+  case 'post':
+    // verificar si existe por POST id y cantidad
+    if (!isset($_POST['id'], $_POST['qty'])) {
+      jsonBuild(403);
+    }
+    // verificar si se puede agregar al carrito
+    if (!addToCart($_POST['id'], $_POST['qty'])) {
+      jsonBuild(400, 'No se puede agregar al carrito, intenta de nuevo');
+    }
+    jsonBuild(201);
     break;
 }
 

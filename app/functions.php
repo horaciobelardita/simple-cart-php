@@ -113,13 +113,14 @@ function addToCart($id, $qty = 1)
   }
 
   // verificar si ya existe el producto en el carrito y aumenta en cantidad
-  foreach ($_SESSION['cart']['products'] as $i => $p) {
-    if ($p['id'] == $id) {
-      $p['qty'] += $qty;
-      $_SESSION['cart']['products'][$i] = $p;
+  foreach ($_SESSION['cart']['products'] as $index => $product) {
+    if ($product['id'] == $id) {
+      $product['qty'] += $qty;
+      $_SESSION['cart']['products'][$index] = $product;
       return true;
     }
   }
+  // si no existe el producto en el carrito lo agrega
   $_SESSION['cart']['products'][] = $newProduct;
   return true;
 }

@@ -20,14 +20,14 @@ require_once 'includes/navbar.php';
                 <p class="card-text text-danger">
                   <?= formatCurrency($product['price']) ?>
                 </p>
-                <a href="#" data-toggle="tooltip" title="agregar al carrito" class="btn btn-success"><i class="fa fa-plus"></i> Agregar al Carrito</a>
+                <a href="#" data-toggle="tooltip" data-id="<?= $product['id'] ?>" data-qty="1" title="agregar al carrito" class="btn btn-success add-to-cart"><i class="fa fa-plus "></i> Agregar al Carrito</a>
               </div>
             </div>
           </div>
         <?php endforeach ?>
       </div>
     </div>
-    <div class="col-md-4 col-sm-12 bg-light py-2">
+    <div class="col-md-4 col-sm-12 bg-light py-2" id="load-wrapper">
       <h2>Carrito</h2>
       <div id="cart-wrapper">
         <!-- Cart content here -->
