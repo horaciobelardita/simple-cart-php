@@ -47,7 +47,7 @@ switch ($action) {
           <td class="align-middle text-center">' . $product['name'] .  '</td>
           <td class="align-middle text-center">' . formatCurrency($product['price'], '$') .  '</td>
           <td class="align-middle text-center" width="5%">
-            <input type="number" min="0" max="50" value="' . $product['qty'] .  '" class="form-control form-control-sm">
+            <input type="text" data-qty="'. $product['qty'] . '" data-id="' . $product['id'] . '" value="' . $product['qty'] .  '" class="form-control text-center update-from-cart form-control-sm">
           </td>
           <td class="align-middle text-center">' . formatCurrency($product['qty'] * $product['price'], '$') .  '</td>
           <td class="align-middle text-center text-danger">
@@ -103,6 +103,7 @@ switch ($action) {
     }
     jsonBuild(201);
     break;
+    // vaciar el carrito
   case 'destroy':
     if (!deleteCart()) {
       jsonBuild(400, 'No se pudo vaciar el carrito');
@@ -118,9 +119,20 @@ switch ($action) {
       jsonBuild(400, 'No se pudo borrar del carrito, intenta de nuevo');
     }
     jsonBuild(200, 'Producto eliminado con exito');
+  case 'put':
+    if (!isset($_POST['id'], $_POST['qty'])) {
+      jsonBuild(403);
+      return;
+    }
+    if (!updateProductCart($_POST['id'], $_POST['qty'])) {
+      jsonBuild(400, 'No se pudo actualizar la cantidad en el carrito, intenta de nuevo');
+    }
+    jsonBuild(200, 'Producto actualizado con exito');
+    break;
   default:
     jsonBuild(403);
 }
+
 
 function jsonBuild($status = 200, $msg = '', $data = [])
 {

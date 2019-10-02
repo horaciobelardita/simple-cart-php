@@ -6,8 +6,8 @@ session_start();
 
 // URL
 define("PORT", "7879");
-define('URL', 'http://carrito.test/');
-define('BASEPATH', 'http://carrito.test/');
+define('URL', 'http://simple-cart-php.test/');
+define('BASEPATH', 'http://simple-cart-php.test/');
 
 // PATH FOLDERS
 define('DS', DIRECTORY_SEPARATOR);

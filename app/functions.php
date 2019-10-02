@@ -139,6 +139,25 @@ function addToCart($id, $qty = 1)
   return true;
 }
 
+function updateProductCart($id, $qty = 1)
+{
+  // si no hay productos en el carrito lo agrego y retorna el carrito
+  if (!isset($_SESSION['cart']) || empty($_SESSION['cart']['products'])) {
+    return false;
+  }
+
+  // verificar si ya existe el producto en el carrito y aumenta en cantidad
+  foreach ($_SESSION['cart']['products'] as $index => $product) {
+    if ($product['id'] == $id) {
+      $product['qty'] = $qty;
+      $_SESSION['cart']['products'][$index] = $product;
+      return true;
+    }
+  }
+  // si no existe el producto en el carrito 
+  return false;
+}
+
 function deleteCart()
 {
   unset($_SESSION['cart']);
